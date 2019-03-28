@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tests xmlns:json="http://json.org/">
+
+	<params>
+		<param name="use-rabbitfish">false</param>
+		<param name="use-badgerfish">false</param>
+		<param name="use-namespaces">false</param>
+	</params>
+
+	<test id="force-array">
+		<input>
+			<root>
+				<element json:force-array="true">hello world</element>
+			</root>
+		</input>
+		<output>
+			<json:object>
+
+				<json:member>
+					<json:name/>
+					<json:value>
+						<json:object>
+							<json:member>
+								<json:name>root</json:name>
+								<json:value>
+									<json:object>
+
+										<json:member>
+											<json:name>element</json:name>
+											<json:value>
+												<json:array>
+													<json:array-value>
+														<json:value>hello world</json:value>
+													</json:array-value>
+												</json:array>
+
+											</json:value>
+										</json:member>
+									</json:object>
+								</json:value>
+							</json:member>
+						</json:object>
+					</json:value>
+				</json:member>
+			</json:object>			
+		</output>
+	</test>
+
+	<test id="force-array-siblings">
+		<input>
+			<root>
+				<list json:force-array="true">item</list>
+				<object>something else</object>
+			</root>
+		</input>
+		<output>
+			<json:object>
+				<json:member>
+					<json:name/>
+					<json:value>
+						<json:object>
+							<json:member>
+								<json:name>root</json:name>
+								<json:value>
+									<json:object>
+
+										<json:member>
+											<json:name>list</json:name>
+											<json:value>
+												<json:array>
+													<json:array-value>
+														<json:value>item</json:value>
+													</json:array-value>
+												</json:array>
+
+											</json:value>
+										</json:member>
+										<json:member>
+											<json:name>object</json:name>
+											<json:value>something else</json:value>
+										</json:member>
+									</json:object>
+								</json:value>
+							</json:member>
+						</json:object>
+					</json:value>
+				</json:member>				
+			</json:object>
+		</output>
+	</test>
+	
+	<test id="list-and-other">
+		<input>
+			<root>
+				<list>item one</list>
+				<list>item two</list>
+				<object>something else</object>
+			</root>
+		</input>
+		<output>
+			<json:object>
+				<json:member>
+					<json:name/>
+					<json:value>
+						<json:object>
+							<json:member>
+								<json:name>root</json:name>
+								<json:value>
+									<json:object>
+
+										<json:member>
+											<json:name>list</json:name>
+											<json:value>
+												<json:array>
+													<json:array-value>
+														<json:value>item one</json:value>
+													</json:array-value>
+													<json:array-value>
+														<json:value>item two</json:value>
+													</json:array-value>
+												</json:array>
+
+											</json:value>
+										</json:member>
+										<json:member>
+											<json:name>object</json:name>
+											<json:value>something else</json:value>
+										</json:member>
+									</json:object>
+								</json:value>
+							</json:member>
+						</json:object>
+					</json:value>
+				</json:member>				
+			</json:object>
+		</output>
+	</test>
+
+	<test id="element-names">
+		<input>
+			<node-name/>
+		</input>
+		<output>
+			<json:object>
+				<json:member>
+					<json:name/>
+					<json:value>
+						<json:object>
+							<json:member>
+								<json:name>node-name</json:name>
+								<json:value/>
+							</json:member>
+						</json:object>
+					</json:value>
+				</json:member>
+			</json:object>
+		</output>
+	</test>
+
+	<test id="text-content">
+		<input>
+			<alice>bob</alice>
+		</input>
+		<output>
+			<json:object>
+				<json:member>
+					<json:name/>
+					<json:value>
+						<json:object>
+							<json:member>
+								<json:name>alice</json:name>
+								<json:value>bob</json:value>
+							</json:member>
+						</json:object>
+					</json:value>
+				</json:member>
+			</json:object>
+		</output>
+	</test>
+
+	<test id="nested-elements">
+		<input>
+			<alice>
+				<bob>charlie</bob>
+				<david>edgar</david>
+			</alice>
+		</input>
+		<output>
+			<json:object>
+				<json:member>
+					<json:name/>
+					<json:value>
+						<json:object>
+							<json:member>
+								<json:name>alice</json:name>
+								<json:value>
+									<json:object>
+										<json:member>
+											<json:name>bob</json:name>
+											<json:value>charlie</json:value>
+										</json:member>
+										<json:member>
+											<json:name>david</json:name>
+											<json:value>edgar</json:value>
+										</json:member>
+									</json:object>
+								</json:value>
+							</json:member>
+						</json:object>
+					</json:value>
+				</json:member>
+			</json:object>
+		</output>
+	</test>
+
+	<test id="multiple-elements">
+		<input>
+			<alice>
+				<bob>charlie</bob>
+				<bob>david</bob>
+			</alice>
+		</input>
+		<output>
+			<json:object>
+				<json:member>
+					<json:name/>
+					<json:value>
+						<json:object>
+							<json:member>
+								<json:name>alice</json:name>
+								<json:value>
+									<json:object>
+										<json:member>
+											<json:name>bob</json:name>
+											<json:value>
+												<json:array>
+													<json:array-value>
+														<json:value>charlie</json:value>
+													</json:array-value>
+													<json:array-value>
+														<json:value>david</json:value>
+													</json:array-value>
+												</json:array>
+											</json:value>
+										</json:member>
+									</json:object>
+								</json:value>
+							</json:member>
+						</json:object>
+					</json:value>
+				</json:member>
+			</json:object>
+		</output>
+	</test>
+
+	<test id="attributes">
+		<input>
+			<alice charlie="david">bob</alice>
+		</input>
+		<!-- note that I swapped the element text and attribute order -->
+		<output>	
+			<json:object>
+				<json:member>
+					<json:name/>
+					<json:value>
+						<json:object>
+							<json:member>
+								<json:name>alice</json:name>
+								<json:value>
+									<json:object>
+										<json:member>
+											<json:name>charlie</json:name>
+											<json:value>david</json:value>
+										</json:member>
+										<json:member>
+											<json:name>$</json:name>
+											<json:value>bob</json:value>
+										</json:member>
+									</json:object>
+								</json:value>
+							</json:member>
+						</json:object>
+					</json:value>
+				</json:member>
+			</json:object>
+		</output>
+	</test>
+
+	<test id="mixed-content">
+		<input>
+			<alice>bob<charlie>david</charlie>edgar</alice>
+		</input>
+		<output>
+			<json:object>
+				<json:member>
+					<json:name/>
+					<json:value>
+						<json:object>
+							<json:member>
+								<json:name>alice</json:name>
+								<json:value>
+									<json:array>
+										<json:array-value>
+											<json:value>bob</json:value>
+										</json:array-value>
+										<json:array-value>
+											<json:value>
+												<json:object>
+													<json:member>
+														<json:name>charlie</json:name>
+														<json:value>david</json:value>
+													</json:member>
+												</json:object>
+											</json:value>
+										</json:array-value>
+										<json:array-value>
+											<json:value>edgar</json:value>
+										</json:array-value>
+									</json:array>
+								</json:value>
+							</json:member>
+						</json:object>
+					</json:value>
+				</json:member>
+			</json:object>
+		</output>
+	</test>
+
+    <test id="bad-number">
+        <input>
+            <root>1.<child>text</child></root>
+        </input>
+        <output>
+            <json:object>
+                <json:member>
+                    <json:name/>
+                    <json:value>
+                        <json:object>
+                            <json:member>
+                               <json:name>root</json:name>
+                               <json:value>
+                                  <json:array>
+                                     <json:array-value>
+                                        <json:value>1.</json:value>
+                                     </json:array-value>
+                                     <json:array-value>
+                                        <json:value>
+                                           <json:object>
+                                              <json:member>
+                                                 <json:name>child</json:name>
+                                                 <json:value>text</json:value>
+                                              </json:member>
+                                           </json:object>
+                                        </json:value>
+                                     </json:array-value>
+                                  </json:array>
+                               </json:value>
+                            </json:member>
+                         </json:object>
+                    </json:value>
+                </json:member>
+            </json:object>
+        </output>
+    </test>
+    
+    <test id="floating-point">
+        <input>
+            <root>0.4</root>
+        </input>
+        <output>
+            <json:object>
+                <json:member>
+                    <json:name/>
+                    <json:value>
+                        <json:object>
+                            <json:member>
+                               <json:name>root</json:name>
+                               <json:value>0.4</json:value>
+                            </json:member>
+                         </json:object>
+                    </json:value>
+                </json:member>
+            </json:object>
+        </output>
+    </test>
+
+    <test id="type-conversion">
+        <input>
+            <root>864D</root>
+        </input>
+        <output>
+            <json:object>
+                <json:member>
+                    <json:name/>
+                    <json:value>
+                        <json:object>
+                            <json:member>
+                               <json:name>root</json:name>
+                               <json:value>864D</json:value>
+                            </json:member>
+                         </json:object>
+                    </json:value>
+                </json:member>
+            </json:object>
+        </output>
+    </test>
+</tests>
